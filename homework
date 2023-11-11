@@ -1,0 +1,140 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Diagnostics;
+
+namespace Binary_Search_Homework
+{
+    internal class Program
+    {
+        static void Main(string[] args) // feel free to edit the main method as you like
+        {
+            int[] arr1 = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
+            int key = 12;
+
+            //// int idx = BinarySearchHomework.TernarySearch(arr1, key);
+            int idx = BinarySearchHomework.TernarySearch(arr1, key, 0, arr1.Length);
+
+            Console.WriteLine("Found {0} at index {1} using Ternary Search", key, idx);
+
+            Console.WriteLine("=======================");
+            //
+            int[] arr2 = { 1, 2, 2, 2, 2,3, 4, 5, 5, 5, 5, 5, 6, 7, 7, 8, 9 ,10};
+            int key2 = 2;
+            int repeat_count = BinarySearchHomework.GetRepeatCount(arr2, key2);
+            int first = BinarySearchHomework.BinarySearchForCalculatingRepeated(arr2,key2, true,0,arr2.Length);
+            int last = BinarySearchHomework.BinarySearchForCalculatingRepeated(arr2 , key2 ,false, 0 , arr2.Length);
+            Console.WriteLine($"the first place in {first} and the last one in {last}");
+            Console.WriteLine("the number {0} is repeated {1} times", key2, repeat_count);
+           
+
+        }
+    }
+}
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Binary_Search_Homework // don't edit this line!!!
+{
+    public class BinarySearchHomework // don't edit this line!!!
+    {
+        public static int TernarySearch(int[] ar, int key, int start, int end) // don't edit this line!!!
+                                                                                // يمكنك تجاهل برمترات البداية والنهاية إذا لا تريد استخدام الطريقة العودية 
+                                                                                // لكن لاتقوم بحذفهم أو التعديل عليهم هنا تحت اي ظرف!!!
+                                                                                // من الممكن تمرير قيمة 0 لتجاهلهم
+        {
+            //TODO: write code for the ternary search algorithm and return the index of the element
+            if (end >= start)
+            {
+                int firstmid = start + (end - start) / 3;
+                int secondmid = end - (end - start) / 3;
+
+                if (ar[firstmid] == key)
+                    return firstmid;
+
+                if (ar[secondmid] == key)
+                    return secondmid;
+
+                if (key < ar[firstmid])
+                    return TernarySearch(ar, key, start, firstmid - 1);
+
+                else if (key > ar[secondmid])
+                    return TernarySearch(ar,  key , secondmid + 1, end);
+
+                else
+                    return TernarySearch(ar, key, firstmid + 1, secondmid - 1 );
+            }
+            return -1;
+        }
+
+        public static int BinarySearchForCalculatingRepeated
+            (int[] array, int target, bool is_first, int left, int right) // don't edit this line!!!
+                                                                          // يمكنك تجاهل برمترات البداية والنهاية إذا لا تريد استخدام الطريقة العودية 
+                                                                          // لكن لاتقوم بحذفهم أو التعديل عليهم هنا تحت اي ظرف!!!
+                                                                          // من الممكن تمرير قيمة 0 لتجاهلهم
+        {
+            //TODO: this methods is for getting the first accurence of the key and the last accurance
+            int result = -1;
+
+            while (left <= right)
+            {
+                int mid = left + (right - left) / 2;
+
+                if (array[mid] == target)
+                {
+                    result = mid;
+
+                    if (is_first)
+                    {
+                        right = mid - 1;
+                    }
+                    else
+                    {
+                        left = mid + 1;
+                    }
+                }
+                else if (array[mid] < target)
+                {
+                    left = mid + 1;
+                }
+                else
+                {
+                    right = mid - 1;
+                }
+                if (!is_first && mid == array.Length - 1) break;
+
+            }
+
+            return result;
+        }
+
+        public static int GetRepeatCount(int[] arr, int key) // don't edit this line!!!
+        {
+            //TODO: write code to calculate the repeat count of a spacific element
+            // make sure to use the previous method in this method
+
+
+            int first = BinarySearchForCalculatingRepeated(arr,key,true,0,arr.Length);
+            int last = BinarySearchForCalculatingRepeated(arr, key, false, 0, arr.Length);
+            if (first == -1 || last == -1)
+            {
+                return 0;
+            }
+
+            int count = 0;
+            for(int i= first; i<= last;i++)
+                if (key == arr[i])
+                    count++;
+
+            if (count >0)
+                return count;
+            else
+            return 0;
+        }
+    }
+}
