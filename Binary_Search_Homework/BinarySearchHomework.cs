@@ -8,7 +8,7 @@ namespace Binary_Search_Homework // don't edit this line!!!
 {
     public class BinarySearchHomework // don't edit this line!!!
     {
-        public static int TernarySearch(int[] arr, int key, int start, int end) // don't edit this line!!!
+        public static int TernarySearch(int[] array, int key, int start, int end) // don't edit this line!!!
                                                                                 // يمكنك تجاهل برمترات البداية والنهاية إذا لا تريد استخدام الطريقة العودية 
                                                                                 // لكن لاتقوم بحذفهم أو التعديل عليهم هنا تحت اي ظرف!!!
                                                                                 // من الممكن تمرير قيمة 0 لتجاهلهم
